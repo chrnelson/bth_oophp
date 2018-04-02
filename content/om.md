@@ -3,14 +3,12 @@
 Om
 =========================
 
-Denna webbplatsen är en del av kursen [XXX](https://dbwebb.se/kurser/XXX). Uppdatera så att länken går till kursens hemsida på dwebb.se.
+Den här webbplatsen är en del av mitt deltagande i kursen [Objektorienterade webbteknologier](https://dbwebb.se/kurser/oophp-v4).
 
-Några egna kloka ord om kursen?
+Kursen, vars smeknamn är _oophp_, handlar om objektorienterade programmeringstekniker i PHP med fokus på webbprogrammering och webbutveckling av webbapplikationer och webbplatser. Jag ser fram emot ännu en sprängfylld kurs med mängder av lärdomar om PHP, MySQL och allt däremellan.
 
-En fin och representativ bild för kursen, enligt ditt egna val.
+[FIGURE src=image/coding.jpg?w=500"]
 
-[FIGURE src=image/car.png?w=300 caption="En fin bil som demobild."]
+Som vanligt kan allt kursmaterial hittas via [dbwebb-kursrepot på GitHub](https://github.com/dbwebb-se/oophp).
 
-Länka till [dbwebb kursrepot på GitHub](https://github.com/dbwebbse/XXX).
-
-Länka till [ditt eget repo för me/redovisa på GitHub](https://github.com/XXX/XXX).
+Under kursens gång fyller jag även på [mitt egna repo för denna webbplats på GitHub](https://github.com/chrnelson/bth_oophp).

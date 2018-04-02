@@ -3,13 +3,15 @@
  */
 html {
     overflow-y: scroll;
-    background-color: #424242;
+    background-color: #010f7a;
 }
 
 body {
     margin: 0;
     background-color: #fff;
+    text-align: justify;
     word-wrap: break-word;
+    font-family: 'Cambay', sans-serif;
 }
 
 .outer-wrap {
@@ -57,7 +59,7 @@ body {
 .outer-wrap-navbar {
     max-width: 100%;
     min-height: 2em;
-    background-color: #535353;
+    background-color: #010f7a;
     color: #fff;
     padding: 0.5em 0;
 }
@@ -96,7 +98,7 @@ body {
 .outer-wrap-footer {
     max-width: 100%;
     min-height: 10em;
-    background-color: #424242;
+    background-color: #010f7a;
     color: #fff;
     padding: 1em 0;
 }
