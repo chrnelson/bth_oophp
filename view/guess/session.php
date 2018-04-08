@@ -19,11 +19,8 @@ namespace Anax\View;
     <input type="text" name="guess" value="<?= $guess ?>" autofocus>
     <?= ($game->tries() > 0) ? '<input type="submit" name="doGuess" value="Gissa">' : ''; ?>
     <input type="submit" name="doCheat" value="Fuska">
+    <input type="submit" name="reset" value="Nollställ spelet">
 </form>
-
-<p>
-    <a href="?reset">Nollställ spelet</a>
-</p>
 
 <?php if (isset($res)) : ?>
 <p>Din gissning <?= $guess ?> är <b><?= $res ?></b></p>

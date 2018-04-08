@@ -23,7 +23,9 @@ Kmom02
 
 Redovisningstexten kommer senare.
 
+* övning 1 chans att noga gå igenom grunderna, bra hjälp men samtidigt chans att tänka till själv, friska upp minnet från manualen. Vartefter man jobbade framåt i manualen insåg man att det gick att göra tidigare delare bättre och på så sätt byggde man upp kunskapen successivt. Ännu en gång en mycket väldesignad uppgift där man ser att det finns en klar pedagogisk tanke bakom.
 
+** kolla på videoklipp pausa, kolla vilka slarvfel man gjort, felsöka på egen hand och anpassa det som sägs till de egna lösningar. bygger på kunskapen steg för steg.
 
 Kmom03
 -------------------------
