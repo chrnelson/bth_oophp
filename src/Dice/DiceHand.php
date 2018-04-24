@@ -3,7 +3,7 @@
 namespace chrnelson\Dice;
 
 /**
- * A dicehand, consisting of dices.
+ * Class simulating a dicehand, consisting of dices.
  */
 class DiceHand
 {
@@ -17,9 +17,9 @@ class DiceHand
     /**
      * Constructor to initiate the dicehand with a number of dices.
      *
-     * @param int sides Number of dices to create, defaults to five.
+     * @param int $dices Number of dices to create, defaults to five.
      */
-    public function __construct(int $dices = 5)
+    public function __construct(int $dices = 2)
     {
         $this->dices  = [];
         $this->values = [];
@@ -40,7 +40,6 @@ class DiceHand
         for ($i = 0; $i < sizeof($this->dices); $i++) {
             $this->values[$i] = $this->dices[$i]->roll();
         }
-
     }
 
     /**

@@ -1,6 +1,6 @@
 <?php
 /**
- * Guess game specific routes.
+ * Dice game specific routes.
  */
 //var_dump(array_keys(get_defined_vars()));
 
@@ -9,63 +9,64 @@ $app->router->any(["GET", "POST"], "tarning", function () use ($app) {
         "title" => "Tärningsspel 100",
     ];
 
-    //initiate game
-    $game = new \chrnelson\Dice\DiceGame();
-
-    $players = $game->getPlayers();
-
-    // Prepare $data
-    $data["players"] = $players;
-
-    $app->view->add("dice/dice", $data);
-    $app->page->render($data);
-});
-
-/**
- * Guess my number with SESSION.
- */
-$app->router->any(["GET", "POST"], "gissa/session", function () use ($app) {
-    $data = [
-        "title" => "Gissa mitt nummer (SESSION)",
-    ];
-
-    // Get incoming
-    $guess = isset($_POST["guess"]) ? $_POST["guess"] : null;
-    //$number = $_POST["number"]   ?? -1;
-    //$tries  = $_POST["tries"]    ?? 6;
-    //$guess  = $_POST["guess"]    ?? null;
-
-    // Start up the game
-    session_name("numbergame");
-    session_start();
-    if (!isset($_SESSION["game"])) {
-        $_SESSION["game"] = new \chrnelson\Guess\Guess(-1, 6);
+    // Set the session
+    if (session_status() == PHP_SESSION_NONE) {
+        session_name("dicegame");
+        session_start();
     }
 
-    $game = $_SESSION['game'];
+    //initiate game
+    if (!isset($_SESSION["dicegame"])) {
+        $_SESSION["dicegame"] = new \chrnelson\Dice\DiceGame();
+    }
 
-    //$game = new Guess($session->get("number", -1), $sessionen->get("tries", 6));
+    if (isset($_POST["newRound"])) {
+        header("Refresh:0");
+        $game = $_SESSION["dicegame"];
+        $game->gameround->startRound();
+        $_SESSION["gameround"] = $game->gameround->getRoundNumber();
+    }
+
+    if (isset($_POST["continueRound"])) {
+        header("Refresh:0");
+        $game = $_SESSION["dicegame"];
+        $game->gameround->continueRound();
+        $_SESSION["gameround"] = $game->gameround->getRoundNumber();
+    }
+
+    if (isset($_POST["nextPlayer"])) {
+        $game = $_SESSION["dicegame"];
+        $players = $_SESSION["players"];
+        $players[$game->gameround->getPlayer()]->setTotalPoints($game->gameround->getRoundPoints());
+        header("Refresh:0");
+        if ($game->gameround->getPlayer() == 0) {
+            $game->gameround->setPlayer(1);
+        } else {
+            $game->gameround->setPlayer(0);
+        }
+
+        $game->gameround->startRound();
+        $_SESSION["gameround"] = $game->gameround->getRoundNumber();
+    }
 
     // Reset the game
-    if (isset($_GET["reset"])) {
+    if (isset($_POST["reset"])) {
         session_destroy();
+        session_name("dicegame");
         session_start();
-        $_SESSION["game"] = new \chrnelson\Guess\Guess(-1, 6);
-        $game->random();
+        $_SESSION["dicegame"] = new \chrnelson\Dice\DiceGame();
+        header("Refresh:0");
     }
 
-    // Do a guess
-    $res = null;
-    if (isset($_POST["doGuess"])) {
-        $res = $game->makeGuess($guess);
-    }
+    $game = $_SESSION["dicegame"];
+    $_SESSION["players"] = $game->getPlayers();
+    $_SESSION["gameround"] = $game->gameround->getRoundNumber();
 
     // Prepare $data
-    $data["game"] = $game;
-    $data["res"] = $res;
-    $data["guess"] = $guess;
+    $data["dicegame"] = $_SESSION["dicegame"];
+    $data["players"] = $_SESSION["players"];
+    $data["gameround"] = $_SESSION["gameround"];
 
-    // Add view and render page
-    $app->view->add("guess/session", $data);
+    $app->view->add("dice/dice", $data);
     $app->page->render($data);
 });

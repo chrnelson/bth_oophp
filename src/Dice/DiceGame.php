@@ -9,30 +9,32 @@ class DiceGame
 {
 
     /**
-     * @var int $dices   Number of players
-     * @var int $values  Number of dices
+     * @var object $startingDice    Dice used to define starter
+     * @var object $gameround       Simulation of game round
+     * @var array $players          Array of players objects
+     * @var int $gameround          Number of starting player
      */
-    private $dices;
     private $startingDice;
+    public $gameround;
     private $players;
-    private $computer;
+    private $starter;
 
     /**
      * Constructor to create and throw a dice Dice.
      *
-     * @throws PersonAgeException when age is negative.   !!!
-     *
      */
     public function __construct()
     {
-        $this->dices  = [];
         $this->players = [];
 
-
-        $this->players[] = new \chrnelson\Dice\Player("Du");
-        $this->players[] = new \chrnelson\Dice\Player("Neumann");
+        $this->players[0] = new \chrnelson\Dice\Player("Neumann");
+        $this->players[1] = new \chrnelson\Dice\Player("Du");
 
         $this->startingDice = new \chrnelson\Dice\Dice;
+
+        $this->gameround = new \chrnelson\Dice\Gameround;
+
+        $this->starter = -1;
 
         $this->findStarter();
     }
@@ -46,10 +48,26 @@ class DiceGame
     public function findStarter()
     {
 
-        for ($i = 0; $i < sizeof($this->players); $i++) {
+        $found = false;
+        $num = -1;
+        while ($found == false) {
             $this->startingDice->roll();
-            $this->players[$i]->setStartingNumber($this->startingDice->getLastRoll());
+            $this->players[0]->setStartingNumber($this->startingDice->getLastRoll());
+            $this->startingDice->roll();
+            $this->players[1]->setStartingNumber($this->startingDice->getLastRoll());
+
+            if ($this->players[0]->getStartingNumber() > $this->players[1]->getStartingNumber()) {
+                $found = true;
+                $num = 0;
+            }
+            if (($this->players[0]->getStartingNumber() < $this->players[1]->getStartingNumber())) {
+                $found = true;
+                $num = 1;
+            }
         }
+
+        $this->starter = $num;
+        $this->gameround->setPlayer($num);
     }
 
     /**
@@ -60,5 +78,15 @@ class DiceGame
     public function getPlayers()
     {
         return $this->players;
+    }
+
+    /**
+     * Get starter
+     *
+     * @return integer starter player number.
+     */
+    public function getStarter()
+    {
+        return $this->starter;
     }
 }

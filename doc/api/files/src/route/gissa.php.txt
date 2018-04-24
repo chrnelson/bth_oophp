@@ -33,7 +33,7 @@ $app->router->get("gissa/get", function () use ($app) {
         $res = $game->makeGuess($guess);
     }
 
-    // Prepare $datta
+    // Prepare $data
     $data["game"] = $game;
     $data["res"] = $res;
     $data["guess"] = $guess;
@@ -61,6 +61,7 @@ $app->router->any(["GET", "POST"], "gissa/post", function () use ($app) {
 
     // Reset the game
     if (isset($_POST["reset"])) {
+        header("Refresh:0");
         $game->random();
     }
 
@@ -70,7 +71,7 @@ $app->router->any(["GET", "POST"], "gissa/post", function () use ($app) {
         $res = $game->makeGuess($guess);
     }
 
-    // Prepare $datta
+    // Prepare $data
     $data["game"] = $game;
     $data["res"] = $res;
     $data["guess"] = $guess;
@@ -88,28 +89,32 @@ $app->router->any(["GET", "POST"], "gissa/session", function () use ($app) {
         "title" => "Gissa mitt nummer (SESSION)",
     ];
 
+    // Set the session
+    if (session_status() == PHP_SESSION_NONE) {
+        session_name("numbergame");
+        session_start();
+    }
+
     // Get incoming
     $guess = isset($_POST["guess"]) ? $_POST["guess"] : null;
-    //$number = $_POST["number"]   ?? -1;
-    //$tries  = $_POST["tries"]    ?? 6;
-    //$guess  = $_POST["guess"]    ?? null;
 
     // Start up the game
-    session_name("numbergame");
-    session_start();
     if (!isset($_SESSION["game"])) {
         $_SESSION["game"] = new \chrnelson\Guess\Guess(-1, 6);
     }
 
-    $game = $_SESSION['game'];
+    $game = $_SESSION["game"];
 
     //$game = new Guess($session->get("number", -1), $sessionen->get("tries", 6));
 
     // Reset the game
-    if (isset($_GET["reset"])) {
+    if (isset($_POST["reset"])) {
+        //$_SESSION = [];
         session_destroy();
+        session_name("numbergame");
         session_start();
         $_SESSION["game"] = new \chrnelson\Guess\Guess(-1, 6);
+        header("Refresh:0");
         $game->random();
     }
 
@@ -119,7 +124,7 @@ $app->router->any(["GET", "POST"], "gissa/session", function () use ($app) {
         $res = $game->makeGuess($guess);
     }
 
-    // Prepare $datta
+    // Prepare $data
     $data["game"] = $game;
     $data["res"] = $res;
     $data["guess"] = $guess;

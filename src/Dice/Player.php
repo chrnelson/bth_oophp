@@ -20,8 +20,6 @@ class Player
     /**
      * Constructor to create a new Player
      *
-     * @throws PersonAgeException when age is negative.
-     *
      */
     public function __construct($name)
     {
@@ -68,5 +66,15 @@ class Player
     public function getTotalPoints()
     {
         return $this->totalPoints;
+    }
+
+    /**
+     * Set the total points of the player
+     *
+     * @var int $points the points collected from the previous round
+     */
+    public function setTotalPoints($points)
+    {
+        $this->totalPoints = $this->totalPoints + $points;
     }
 }

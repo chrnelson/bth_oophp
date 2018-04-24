@@ -82,22 +82,26 @@ class Guess
      */
     public function makeGuess($number)
     {
-        if ($number < 1 || $number > 100) {
-            throw new GuessException("Your guess is out of bounds.");
-        }
+        try {
+            if ($number < 1 || $number > 100) {
+                throw new GuessException("Du måste ange ett heltal mellan 1 och 100!");
+            }
 
-        $this->tries = ($this->tries - 1);
+            $this->tries = ($this->tries - 1);
 
-        if ($number < $this->number) {
-            return "för låg.";
-        }
+            if ($number < $this->number) {
+                return "för låg.";
+            }
 
-        if ($number > $this->number) {
-            return "för hög.";
-        }
+            if ($number > $this->number) {
+                return "för hög.";
+            }
 
-        if ($number == $this->number) {
-            return "korrekt.";
+            if ($number == $this->number) {
+                return "korrekt.";
+            }
+        } catch (GuessException $e) {
+            echo "Felmeddelande: " . $e->getMessage() . "<hr>";
         }
     }
 }
